@@ -4,7 +4,8 @@ import { checkLogin } from "./backendapi";
 // Frames
 import { Preloader } from "./frames/Preloader";
 import { Main } from "./frames/Main";
-import { Authorization } from "./frames/Authorization";
+import { SignIn } from "./frames/SignIn"
+import { SignUp } from "./frames/SignUp"
 import { Dictionary } from "./frames/Dictionary";
 import { Train } from "./frames/Train";
 
@@ -18,12 +19,7 @@ export class App extends React.Component
   constructor(props)
   {
     super(props);
-    this.state = { currentFrame: "" };
-  }
-
-  componentDidMount()
-  {
-    this.openFrame("Main");
+    this.state = { currentFrame: "Main" };
   }
 
   openFrame = (name) => 
@@ -38,9 +34,9 @@ export class App extends React.Component
 
       if ( !loggedIn )
       
-        this.setState({ currentFrame: "Authorization" });
+        this.setState({ currentFrame: "SignUp" });
 
-      else if (["Authorization", "Main", "Dictionary", "Train"].includes(name))
+      else if (["SignIn", "SignUp", "Main", "Dictionary", "Train"].includes(name))
 
         this.setState({ currentFrame: name });
 
@@ -54,21 +50,32 @@ export class App extends React.Component
 
     return ( <>
       {
-        currentFrame === "Authorization" ?
-          <Authorization openFrame={this.openFrame} />
+        currentFrame === "SignIn" ?
+          <> 
+            <SignIn openFrame={this.openFrame} />
+          </>
+        : currentFrame === "SignUp" ?
+          <> 
+            <SignUp openFrame={this.openFrame} />
+          </>
         : currentFrame === "Main" ?
-          <Main openFrame={this.openFrame} />
+          <>
+            <Main openFrame={this.openFrame} />
+          </>
         : currentFrame === "Dictionary" ?
-          <Dictionary openFrame={this.openFrame} />
+          <>
+            <Dictionary openFrame={this.openFrame} />
+          </>
         : currentFrame === "Train" ?
-          <Train openFrame={this.openFrame} />
+          <>
+            <Train openFrame={this.openFrame} />
+          </>
         : 
           <>
             <Header 
               underLogoText="Loading..."
               buttonText="Loading..."
             />
-
             <Preloader />
           </>
       }
