@@ -1,10 +1,16 @@
 import React from "react";
 import { checkLogin } from "./backendapi";
+
+// Frames
 import { Preloader } from "./frames/Preloader";
 import { Main } from "./frames/Main";
 import { Authorization } from "./frames/Authorization";
 import { Dictionary } from "./frames/Dictionary";
 import { Train } from "./frames/Train";
+
+// Components
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 
 export class App extends React.Component
 {
@@ -56,8 +62,18 @@ export class App extends React.Component
           <Dictionary openFrame={this.openFrame} />
         : currentFrame === "Train" ?
           <Train openFrame={this.openFrame} />
-        : <Preloader />
+        : 
+          <>
+            <Header 
+              underLogoText="Loading..."
+              buttonText="Loading..."
+            />
+
+            <Preloader />
+          </>
       }
+
+      <Footer />
     </>);
   }
 
