@@ -8,6 +8,7 @@ import { SignIn } from "./frames/SignIn"
 import { SignUp } from "./frames/SignUp"
 import { Dictionary } from "./frames/Dictionary";
 import { Train } from "./frames/Train";
+import { AppError } from "./frames/AppError";
 
 // Components
 import { Header } from "./components/Header";
@@ -19,62 +20,101 @@ export class App extends React.Component
   constructor(props)
   {
     super(props);
-    this.state = { currentFrame: "Main" };
+    this.state = { 
+      currentFrame: "",
+    };
+  }
+
+  componentDidMount()
+  {
+    this.openFrame("Main");
   }
 
   openFrame = (name) => 
   {
     console.log("Open frame: " + name);
 
-    let promise = checkLogin();
-
     this.setState( {currentFrame: "Preloader"} );
 
-    promise.then( (loggedIn) => {
+    let promise = checkLogin();
+    promise.then( 
+      (loggedIn) => { // Success
 
-      if ( !loggedIn )
-      
-        this.setState({ currentFrame: "SignUp" });
+        if (!loggedIn)
+        
+          this.setState({ currentFrame: (name === "SignIn" ? "SignIn" : "SignUp") });
 
-      else if (["SignIn", "SignUp", "Main", "Dictionary", "Train"].includes(name))
+        else if (["SignIn", "SignUp", "Main", "Dictionary", "Train", "AppError"].includes(name))
 
-        this.setState({ currentFrame: name });
+          this.setState({ currentFrame: name });
 
-    })
+      }, 
+      (error) =>  // Error
+      {
+        this.setState({ currentFrame: "AppError"});
+      }
+    );
 
   }
 
   render()
   {
-    const {currentFrame} = this.state;
+    const {currentFrame } = this.state;
+    const openFrame = this.openFrame;
 
     return ( <>
       {
         currentFrame === "SignIn" ?
-          <> 
-            <SignIn openFrame={this.openFrame} />
+          <>
+            <Header 
+              underLogoText="sign in"
+              buttonText="Sign Up"
+              logoEvent={()=>openFrame("Main")}
+              buttonEvent={()=>openFrame("SignUp")}
+            />
+            <SignIn openFrame={openFrame}  />
           </>
         : currentFrame === "SignUp" ?
           <> 
-            <SignUp openFrame={this.openFrame} />
+            <Header 
+              underLogoText="sign up"
+              buttonText="Sign In"
+              logoEvent={()=>openFrame("Main")}
+              buttonEvent={()=>openFrame("SignIn")}
+            />
+            <SignUp openFrame={openFrame} />
           </>
         : currentFrame === "Main" ?
           <>
-            <Main openFrame={this.openFrame} />
+            <Header 
+              underLogoText="Main"
+              buttonText="Profile"
+            />
+            <Main openFrame={openFrame} />
           </>
         : currentFrame === "Dictionary" ?
           <>
-            <Dictionary openFrame={this.openFrame} />
+            <Dictionary openFrame={openFrame} />
           </>
         : currentFrame === "Train" ?
           <>
-            <Train openFrame={this.openFrame} />
+            <Train openFrame={openFrame} />
+          </>
+        : currentFrame === "AppError" ?
+          <>
+            <Header 
+              underLogoText="Something went wrong..."
+              buttonText="Sorry"
+            />
+            <AppError />
           </>
         : 
           <>
             <Header 
               underLogoText="Loading..."
               buttonText="Loading..."
+              logoEvent={()=>openFrame("Main")}
+              buttonEvent={()=>openFrame("Main")}
             />
             <Preloader />
           </>

@@ -15,5 +15,41 @@ export function checkLogin()
             setTimeout( () => resolve(false), 1500);
         }
 
-    })
+    });
+}
+
+// registration/email?name=[dsfsdfdsf]
+export function signUp(firstName,lastName,email, password)
+{
+    return new Promise((resolve, reject) => {
+
+        setTimeout( () => resolve(true), 500);
+
+    });
+}
+
+const DEBUG_EMAILEXIST = false;
+export function emailExists(email)
+{
+    return new Promise((resolve, reject) => {
+
+        setTimeout( () => resolve(DEBUG_EMAILEXIST), 500);
+
+    });
+}
+
+// admin/getWords
+export function getRandomWords()
+{
+    return new Promise((resolve, reject) => {
+
+        setTimeout( () => resolve(DEBUG_EMAILEXIST), 500);
+
+    });
+}
+
+// admin/getBy?str=[key]
+export function getTenWordsByKey(key)
+{
+
 }
