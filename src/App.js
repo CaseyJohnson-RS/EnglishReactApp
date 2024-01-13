@@ -13,6 +13,9 @@ import { AppError } from "./frames/AppError";
 // Components
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { Profile } from "./components/Profile";
+
+const frameList = ["SignIn", "SignUp", "Main", "Dictionary", "Train", "AppError"];
 
 export class App extends React.Component
 {
@@ -22,12 +25,14 @@ export class App extends React.Component
     super(props);
     this.state = { 
       currentFrame: "",
+      profileOpen: false
     };
   }
 
   componentDidMount()
   {
     this.openFrame("Main");
+    
   }
 
   openFrame = (name) => 
@@ -44,7 +49,7 @@ export class App extends React.Component
         
           this.setState({ currentFrame: (name === "SignIn" ? "SignIn" : "SignUp") });
 
-        else if (["SignIn", "SignUp", "Main", "Dictionary", "Train", "AppError"].includes(name))
+        else if (frameList.includes(name))
 
           this.setState({ currentFrame: name });
 
@@ -54,12 +59,14 @@ export class App extends React.Component
         this.setState({ currentFrame: "AppError"});
       }
     );
-
   }
+
+  closeProfile = () => this.setState({profileOpen: false});
+  openProfile = () => this.setState({profileOpen: true});
 
   render()
   {
-    const {currentFrame } = this.state;
+    const {currentFrame, profileOpen} = this.state;
     const openFrame = this.openFrame;
 
     return ( <>
@@ -89,6 +96,7 @@ export class App extends React.Component
             <Header 
               underLogoText="Main"
               buttonText="Profile"
+              buttonEvent={this.openProfile}
             />
             <Main openFrame={openFrame} />
           </>
@@ -105,6 +113,8 @@ export class App extends React.Component
             <Header 
               underLogoText="Something went wrong..."
               buttonText="Sorry"
+              logoEvent={()=>openFrame("Main")}
+              buttonEvent={()=>openFrame("Main")}
             />
             <AppError />
           </>
@@ -113,12 +123,12 @@ export class App extends React.Component
             <Header 
               underLogoText="Loading..."
               buttonText="Loading..."
-              logoEvent={()=>openFrame("Main")}
-              buttonEvent={()=>openFrame("Main")}
             />
             <Preloader />
           </>
       }
+
+      <Profile open={profileOpen} onClose={this.closeProfile}/>
 
       <Footer />
     </>);

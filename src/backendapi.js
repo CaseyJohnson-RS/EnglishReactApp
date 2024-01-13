@@ -1,7 +1,7 @@
 
 //  Все функции запроса на сервер - это promise
 
-const DEBUG_LOGGEDIN = false;
+const DEBUG_LOGGEDIN = true;
 export function checkLogin()
 {
     // Я не знаю, как ты это будешь делать, но это
@@ -52,4 +52,26 @@ export function getRandomWords()
 export function getTenWordsByKey(key)
 {
 
+}
+
+// LK
+export function getProfileInfo()
+{
+    return new Promise((resolve, reject) =>
+    {
+
+        //...
+
+        let data = {
+            firstName: "name",
+            lastName: "last",
+            level: "Beginner",
+            date: "Sat Nov 11 16:18:27 GMT+07:00 2023",
+            words: 0,
+            email: "email"
+        }
+
+        setTimeout(() => resolve(data), 3000);
+
+    });
 }
