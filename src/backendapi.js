@@ -1,9 +1,9 @@
 
 //  Все функции запроса на сервер - это promise
 
-const DEBUG_LOGGEDIN = true;
+const DEBUG_LOGGEDIN = false;
 export function checkLogin()
-{
+{ 
     // Я не знаю, как ты это будешь делать, но это
     // ты будешь делать здесь
 
@@ -22,6 +22,17 @@ export function checkLogin()
 export function signUp(firstName,lastName,email, password)
 {
     return new Promise((resolve, reject) => {
+
+        setTimeout( () => resolve(true), 500);
+
+    });
+}
+
+// result: true - logged in
+// result: false - wrong email or password
+export function signIn(email, password)
+{
+    return new Promise( (resolve, reject) => {
 
         setTimeout( () => resolve(true), 500);
 

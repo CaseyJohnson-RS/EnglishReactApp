@@ -39,6 +39,12 @@ export class App extends React.Component
   {
     console.log("Open frame: " + name);
 
+    if (name === "AppError")
+    {
+      this.setState({ currentFrame: "AppError"});
+      return;
+    }
+
     this.setState( {currentFrame: "Preloader"} );
 
     let promise = checkLogin();
