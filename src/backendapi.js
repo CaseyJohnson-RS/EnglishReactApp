@@ -1,19 +1,37 @@
 
 //  Все функции запроса на сервер - это promise
 
-const DEBUG_LOGGEDIN = false;
+const URI = "https://localhost:8080/";
+const DEBUG = false;
+
+//const DEBUG_LOGGEDIN = false;
+
+// URI/session
 export function checkLogin()
 { 
-    // Я не знаю, как ты это будешь делать, но это
-    // ты будешь делать здесь
 
     return new Promise((resolve, reject) => {
 
-        if (DEBUG_LOGGEDIN) {
-            setTimeout( () => resolve(true), 2000);
-        } else {
-            setTimeout( () => resolve(false), 1500);
-        }
+        if(DEBUG)
+            setTimeout( () => resolve(true), 300);
+
+        fetch(URI + "session").then ( (response) => 
+        {
+            if (!response.ok) 
+            {
+                reject(false);
+                return {};
+            }
+
+            return response.text();
+            
+        }).then( (result) =>
+        {
+            if (result === "false")
+                resolve(false);
+            else 
+                resolve(true);
+        }).catch( (result) => reject(false));
 
     });
 }
@@ -23,7 +41,31 @@ export function signUp(firstName,lastName,email, password)
 {
     return new Promise((resolve, reject) => {
 
-        setTimeout( () => resolve(true), 500);
+        if(DEBUG)
+            setTimeout( () => resolve(true), 300);
+
+        fetch(URI + "registration", {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+              "Content-Type": "application/json",
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(
+                {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password
+                }
+            ), // body data type must match "Content-Type" header
+          }).then( (response) => {
+            resolve(true)
+          });
 
     });
 }
@@ -34,7 +76,33 @@ export function signIn(email, password)
 {
     return new Promise( (resolve, reject) => {
 
-        setTimeout( () => resolve(true), 500);
+        if(DEBUG)
+            setTimeout( () => resolve(true), 300);
+
+        fetch(URI + "login", {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+              "Content-Type": "application/json",
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(
+                {
+                    email: email,
+                    password: password
+                }
+            ), // body data type must match "Content-Type" header
+          }).catch( (result) => reject(false))
+          .then( (response) => {
+            if (response.ok)
+                resolve(true);
+            else
+                resolve(false);
+          });
 
     });
 }
@@ -44,7 +112,21 @@ export function emailExists(email)
 {
     return new Promise((resolve, reject) => {
 
-        setTimeout( () => resolve(DEBUG_EMAILEXIST), 500);
+        if(DEBUG)
+            setTimeout( () => resolve(true), 300);
+
+        fetch(URI + "registration/email?name=" + email).catch( (result) => reject(false))
+        .then( (response) => 
+        {
+            if(response.ok)
+            {
+                let ans = response.text();
+                if (ans === "true")
+                    resolve(true);
+                else
+                    resolve(false);
+            } else reject(false);
+        }).catch( (result) => reject(false));
 
     });
 }
