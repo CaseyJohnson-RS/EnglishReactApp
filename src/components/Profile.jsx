@@ -54,8 +54,8 @@ export class Profile extends React.Component
         const _style = this.props.open ? {zIndex: "1003", display: "block", opacity: "1", top: "10%", transform: "scaleX(1) scaleY(1)"} : {};
         const {dataLoaded, firstName, lastName, level, date, words, email} = this.state;
 
-        return (<div class="modal" style={_style}>
-            <div class="modal-content">
+        return (<div className="modal" style={_style}>
+            <div className="modal-content">
                 { 
                     dataLoaded ?
                     <>
@@ -67,14 +67,14 @@ export class Profile extends React.Component
                     </> :
                     <>
                         <h5>Loading...</h5>
-                        <div class="progress">
-                            <div class="indeterminate"></div>
+                        <div className="progress">
+                            <div className="indeterminate"></div>
                         </div>
                     </>
             }
             </div>
-            <div class="modal-footer">
-                <a href="#!" onClick={this.props.onClose} class="modal-close waves-effect waves-green btn-flat" >Close</a>
+            <div className="modal-footer">
+                <a href="#!" onClick={this.props.onClose} className="modal-close waves-effect waves-green btn-flat" >Close</a>
             </div>
         </div>);
     }

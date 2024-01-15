@@ -1,7 +1,11 @@
 
 function Main(props)
 {
-    return (<>Main</>)
+    return (<main className="content">
+        
+        
+
+    </main>);
 }
 
 export {Main}

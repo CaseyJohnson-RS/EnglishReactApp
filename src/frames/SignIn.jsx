@@ -164,15 +164,15 @@ export class SignIn extends React.Component {
                         (sendFormResult === "Loading") ?
                         <>
                             <h6>Loading...</h6>
-                            <div class="progress">
-                                <div class="indeterminate"></div>
+                            <div className="progress">
+                                <div className="indeterminate"></div>
                             </div>
                         </> :
                         (sendFormResult === "LoggedIn") ?
                         <>
                             <h6>Successful!</h6>
-                            <div class="progress">
-                                <div class="indeterminate"></div>
+                            <div className="progress">
+                                <div className="indeterminate"></div>
                             </div>
                         </> : 
                         <></>

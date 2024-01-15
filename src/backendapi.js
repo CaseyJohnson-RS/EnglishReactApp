@@ -1,8 +1,8 @@
 
 //  Все функции запроса на сервер - это promise
 
-const URI = "https://localhost:8080/";
-const DEBUG = false;
+const URI = "https://localhost:8443/";
+const DEBUG = true;
 
 //const DEBUG_LOGGEDIN = false;
 
@@ -12,10 +12,12 @@ export function checkLogin()
 
     return new Promise((resolve, reject) => {
 
-        if(DEBUG)
+        if(DEBUG) {
             setTimeout( () => resolve(true), 300);
+            return;
+        }
 
-        fetch(URI + "session").then ( (response) => 
+        fetch(URI + "session",{mode: "no-cors"}).then ( (response) => 
         {
             if (!response.ok) 
             {
@@ -41,12 +43,14 @@ export function signUp(firstName,lastName,email, password)
 {
     return new Promise((resolve, reject) => {
 
-        if(DEBUG)
+        if(DEBUG) {
             setTimeout( () => resolve(true), 300);
+            return;
+        }
 
         fetch(URI + "registration", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
+            mode: "no-cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
             credentials: "same-origin", // include, *same-origin, omit
             headers: {
@@ -76,12 +80,14 @@ export function signIn(email, password)
 {
     return new Promise( (resolve, reject) => {
 
-        if(DEBUG)
+        if(DEBUG) {
             setTimeout( () => resolve(true), 300);
+            return;
+        }
 
         fetch(URI + "login", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
+            mode: "no-cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
             credentials: "same-origin", // include, *same-origin, omit
             headers: {
@@ -112,8 +118,10 @@ export function emailExists(email)
 {
     return new Promise((resolve, reject) => {
 
-        if(DEBUG)
+        if(DEBUG) {
             setTimeout( () => resolve(true), 300);
+            return;
+        }
 
         fetch(URI + "registration/email?name=" + email).catch( (result) => reject(false))
         .then( (response) => 
