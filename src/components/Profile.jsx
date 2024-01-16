@@ -1,4 +1,4 @@
-import { getProfileInfo } from "../backendapi";
+import { getProfileInfo, exitProfile } from "../backendapi";
 import React from "react";
 
 /*
@@ -49,6 +49,19 @@ export class Profile extends React.Component
         });
     }
 
+    onExitProfile = () => 
+    {
+
+        this.props.onClose();
+
+        let promise = exitProfile(); 
+        promise.then( (resolve) =>
+        {
+            this.props.openFrame("SignIn");   
+        });
+        
+    }
+
     render()
     {
         const _style = this.props.open ? {zIndex: "1003", display: "block", opacity: "1", top: "10%", transform: "scaleX(1) scaleY(1)"} : {};
@@ -74,6 +87,11 @@ export class Profile extends React.Component
             }
             </div>
             <div className="modal-footer">
+                { 
+                    dataLoaded ? 
+                    <a href="#!" onClick={this.onExitProfile} className="modal-close waves-effect waves-green btn light-blue darken-2 left" >Exit profile</a> : 
+                    <></> 
+                }
                 <a href="#!" onClick={this.props.onClose} className="modal-close waves-effect waves-green btn-flat" >Close</a>
             </div>
         </div>);

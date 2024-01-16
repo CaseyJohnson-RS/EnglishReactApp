@@ -134,7 +134,7 @@ export class App extends React.Component
           </>
       }
 
-      <Profile open={profileOpen} onClose={this.closeProfile}/>
+      <Profile open={profileOpen} onClose={this.closeProfile} openFrame={openFrame}/>
 
       <Footer />
     </>);
