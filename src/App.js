@@ -118,6 +118,12 @@ export class App extends React.Component
           </>
         : currentFrame === "Train" ?
           <>
+            <Header 
+              underLogoText="Training"
+              buttonText="Back"
+              logoEvent={()=>openFrame("Main")}
+              buttonEvent={()=>openFrame("Main")}
+            />
             <Train openFrame={openFrame} />
           </>
         : currentFrame === "AppError" ?

@@ -376,7 +376,6 @@ export function getRandomWords()
     });
 }
 
-// admin/getBy?str=[key]
 export function getTenWordsByKey(key)
 {
 
@@ -409,7 +408,6 @@ export function getTenWordsByKey(key)
 
 }
 
-// LK
 export function getProfileInfo()
 {
     return new Promise((resolve, reject) =>
@@ -461,6 +459,50 @@ export function getAllAddedWords()
 
 export function trainWord(word,translation)
 {
+
+}
+
+export function getFiveTrainWords()
+{
+
+    return new Promise( (resolve, reject) =>
+    {
+
+        if(dictionary.length < 5)
+            resolve(false);
+        else 
+        {
+            let numset = []
+            let nextnum = getRandomInt(0,dictionary.length);
+            for(let i = 0; i < 5; ++i)
+            {
+                while (numset.includes(nextnum))
+                    nextnum = getRandomInt(0,dictionary.length);
+                
+                numset.push(nextnum);
+            }
+
+            let wordset = []
+            for(let i = 0; i < numset.length; ++i)
+            {
+                for(let j = 0; j < words.length; ++j)
+                {
+                    if(dictionary[numset[i]].id === words[j].id)
+                    {
+                        wordset.push({
+                            word_eng: words[j].eng, 
+                            word_rus: words[j].rus, 
+                            trains: dictionary[numset[i]].count, 
+                            id: words[j].id
+                        });
+                    }
+                }
+            }
+
+            resolve(wordset);
+        }
+
+    });
 
 }
 
