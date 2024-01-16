@@ -137,7 +137,7 @@ const startDictionary =
 let obj;
 
 obj = localStorage.getItem("emails");
-let emails = (obj === null) ? [] : obj;
+let emails = (obj === null) ? [] : JSON.parse(obj);
 
 obj = localStorage.getItem("accountsData");
 let accountsData = (obj === null) ? [] : JSON.parse(obj);
@@ -177,10 +177,12 @@ export function signUp(firstName,lastName,email, password)
     accountsData.push({
         firstName: firstName,
         lastName: lastName,
-        password: password
+        password: password,
+        date: Date.now().toString(),
+        words: 5
     });
 
-    localStorage.setItem("emails", emails);
+    localStorage.setItem("emails", JSON.stringify(emails));
     localStorage.setItem("accountsData", JSON.stringify(accountsData));
 
     return new Promise( (resolve, reject) =>
@@ -268,13 +270,14 @@ export function getWordLearnData()
 
 export function addWordToDict(word, trantlation)
 {
-    console.log("add");
     return new Promise( (resolve, reject) => 
     {
         for(let i = 0; i < words.length; ++i)
         {
             if (words[i].eng === word && words[i].rus === trantlation)
             {
+                accountsData[userIndex].words++;
+                localStorage.setItem("accountsData",JSON.stringify(accountsData));
                 dictionary.push( {id: words[i].id, count: 0, lastTraining: ""})
             }
         }
@@ -287,7 +290,6 @@ export function addWordToDict(word, trantlation)
 
 export function removeWordFromDict(word, translation)
 {
-    console.log("remove");
     return new Promise( (resolve, reject) => 
     {
         let id = -1;
@@ -305,11 +307,14 @@ export function removeWordFromDict(word, translation)
         {
             if (dictionary[i].id === id)
             {
+                accountsData[userIndex].words--;
+                localStorage.setItem("accountsData",JSON.stringify(accountsData));
                 dictionary.splice(i, 1);
                 break;
             }
         }
 
+        
         localStorage.setItem("dictionary",JSON.stringify(dictionary));
 
         setTimeout( () => resolve(true), 300 );
@@ -410,20 +415,25 @@ export function getProfileInfo()
     return new Promise((resolve, reject) =>
     {
 
-        //...
-
         let data = {
-            firstName: "name",
-            lastName: "last",
+            firstName: accountsData[userIndex].firstName,
+            lastName: accountsData[userIndex].lastName,
             level: "Beginner",
-            date: "Sat Nov 11 16:18:27 GMT+07:00 2023",
-            words: 0,
-            email: "email"
+            date: accountsData[userIndex].date,
+            words: accountsData[userIndex].words,
+            email: emails[userIndex]
         }
 
-        setTimeout(() => resolve(data), 3000);
+        console.log(data);
+
+        setTimeout(() => resolve(data), 1500);
 
     });
+}
+
+export function trainWord(word,translation)
+{
+    
 }
 
 /*

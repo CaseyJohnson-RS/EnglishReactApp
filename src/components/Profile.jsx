@@ -27,14 +27,14 @@ export class Profile extends React.Component
         }
     }
 
-    componentDidMount()
+    update = () =>
     {
         let promise = getProfileInfo();
         promise.then( (result) =>
         {
 
-            let parts = result.date.split(' ');
-            let date = parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[5];
+            let date = result.date;
+            //let date = parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[5];
 
             this.setState({
                 dataLoaded: true,
@@ -45,6 +45,8 @@ export class Profile extends React.Component
                 words: result.words,
                 email: result.email
             });
+
+            console.log(result.email);
 
         });
     }
@@ -59,7 +61,14 @@ export class Profile extends React.Component
         {
             this.props.openFrame("SignIn");   
         });
+
+        this.update();
         
+    }
+
+    componentDidMount()
+    {
+        this.update();
     }
 
     render()
