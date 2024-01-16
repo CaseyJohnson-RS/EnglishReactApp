@@ -47,8 +47,6 @@ export class WordBlock extends React.Component
         
     }
 
-    
-
     render()
     {
         const {added, word, translation, workingWithDict} = this.state;

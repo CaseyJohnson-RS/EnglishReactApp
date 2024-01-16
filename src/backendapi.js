@@ -424,8 +424,6 @@ export function getProfileInfo()
             email: emails[userIndex]
         }
 
-        console.log(data);
-
         setTimeout(() => resolve(data), 1500);
 
     });
@@ -433,7 +431,7 @@ export function getProfileInfo()
 
 export function trainWord(word,translation)
 {
-    
+
 }
 
 /*

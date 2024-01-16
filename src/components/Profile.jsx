@@ -23,7 +23,8 @@ export class Profile extends React.Component
             level: "",
             date: "",
             words: 0,
-            email: ""
+            email: "",
+            openedBefore: false
         }
     }
 
@@ -46,8 +47,6 @@ export class Profile extends React.Component
                 email: result.email
             });
 
-            console.log(result.email);
-
         });
     }
 
@@ -66,13 +65,18 @@ export class Profile extends React.Component
         
     }
 
-    componentDidMount()
-    {
-        this.update();
-    }
-
     render()
     {
+        if(!this.state.openedBefore && this.props.open)
+        {
+            setTimeout( ()=>
+            {
+                this.setState({openedBefore: true});
+                this.update();
+            }, 200)
+            
+        }
+
         const _style = this.props.open ? {zIndex: "1003", display: "block", opacity: "1", top: "10%", transform: "scaleX(1) scaleY(1)"} : {};
         const {dataLoaded, firstName, lastName, level, date, words, email} = this.state;
 
