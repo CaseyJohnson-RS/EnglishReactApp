@@ -7,10 +7,9 @@ export class DictWord extends React.Component
     {
         const {word_eng, word_rus, trains} = this.props;
 
-        
-
+    
         return(<>
-            <div className="col s3 card-panel">
+            <div className="col s5 card-panel">
                 <div className="row">
                     <div className="col s6">
                         <h5 className="left">

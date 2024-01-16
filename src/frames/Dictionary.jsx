@@ -46,12 +46,14 @@ export class Dictionary extends React.Component {
                     </div>
                     </div>
                 </div> :
-                <div className="row">
-                    {
-                        this.state.words.map((word) => (
-                            <DictWord key={word.id} {...word}/>
-                        ))
-                    }
+                <div className="container">
+                    <div className="row">
+                        {
+                            this.state.words.map((word) => (
+                                <DictWord key={word.id} {...word}/>
+                            ))
+                        }
+                    </div>
                 </div>
             }
         </main>)
