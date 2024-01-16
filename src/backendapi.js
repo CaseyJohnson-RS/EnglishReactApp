@@ -429,6 +429,36 @@ export function getProfileInfo()
     });
 }
 
+export function getAllAddedWords()
+{
+
+    return new Promise( (resolve, reject)=>
+    {
+        let wordset = [];
+
+        for(let i = 0; i < dictionary.length; ++i)
+        {
+            for(let j = 0; j < words.length; ++j)
+            {
+                if(dictionary[i].id === words[j].id)
+                {
+                    wordset.push({
+                        word_eng: words[j].eng, 
+                        word_rus: words[j].rus, 
+                        trains: dictionary[i].count, 
+                        id: words[j].id
+                    });
+
+                }
+            }
+        }
+
+        resolve(wordset);
+    });
+
+    
+}
+
 export function trainWord(word,translation)
 {
 

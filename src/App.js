@@ -108,6 +108,12 @@ export class App extends React.Component
           </>
         : currentFrame === "Dictionary" ?
           <>
+            <Header 
+              underLogoText="Dictionary"
+              buttonText="Back"
+              logoEvent={()=>openFrame("Main")}
+              buttonEvent={()=>openFrame("Main")}
+            />
             <Dictionary openFrame={openFrame} />
           </>
         : currentFrame === "Train" ?

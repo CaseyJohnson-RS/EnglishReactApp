@@ -15,7 +15,7 @@ function Main(props)
             
             <div className="col s2" />
             
-            < LearnTable  />
+            <LearnTable openFrame={props.openFrame} />
 
         </div>
         
