@@ -1,7 +1,7 @@
 
 # Проект 'English App'
 
-Used CSS Framework Tailwind
+Used CSS Framework Materialize CSS
 
 ---
 
